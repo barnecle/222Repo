@@ -9,7 +9,6 @@ Original file is located at
 
 import numpy as np
 import os
-import matplotlib.pyplot as plt
 from sklearn import preprocessing
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder

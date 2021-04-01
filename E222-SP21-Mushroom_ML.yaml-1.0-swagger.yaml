@@ -4,34 +4,34 @@ info:
   title: 'Mushroom_ML'
   description: 'API for Machine Learning application'
 paths: 
-  /file/<filename>:
+  /file/{filename}:
     post:
       tags:
-        -Upload
+        - Upload
       summary: upload instances of data to be predicted
       operationID: file.upload
       parameters:
-        name: filename
-        in: query
-        description:  file upload
-        required: true
-        schema:
-          type: string
+              - name: filename
+                in: query
+                description:  file upload
+                required: true
+                schema:
+                  type: string
             
       responses:
         '405':
-          description: Invalid input
-        '201':
-          description: 'Upload success'
+         description: Invalid input
+         # '201':
+         #description: 'Upload success'
       requestBody:
         content:
-          multipart/form-data:
-            schema:
+         multipart/form-data:
+           schema:
               type: object
               properties:
-                file:
-                  type: string
-                  format: binary
+               file:
+                 type: string
+                 format: binary
     get:
       tags:
         - Download
@@ -47,7 +47,7 @@ paths:
       operationId: file.remove
       responses:
         '405':
-          description: Invalid Input or Non-removable file
+          description: 'Invalid Input or Non-removable file'
   /list:
     get:
       tags:
@@ -58,7 +58,7 @@ paths:
         '200':
           description: 'CPU info, or add more text'
 
-  /predict/<filename>:
+  /predict/{filename}:
     get:
       tags:
         - Predict
@@ -68,7 +68,7 @@ paths:
         '405':
           description: Invalid input
            
-  /predict/path:
+  /predict_path:
     get:
       tags:
         - Image
@@ -81,12 +81,12 @@ paths:
     get:
       tags:
         - List
-      summary: list of model evaluation options
+      summary: list of links to model evaluation options
       operationId: model.list
       responses:
         '300':
           description: 'Choose one of the evaluation options'
-  /model/confusion_matrix:
+  /confusion_matrix:
     get:
       tags:
         - Text
@@ -95,7 +95,7 @@ paths:
       responses:
         '200':
           description: 'Confusion Matrix'
-  /model/ROC:
+  /ROC:
     get:
       tags:
         - Image
@@ -104,7 +104,7 @@ paths:
       responses:
         '200':
           description: 'ROC curve'
-  /model/evaluation:
+  /assessment:
     get:
       tags:
         - Text
@@ -113,27 +113,23 @@ paths:
       responses:
         '200':
           description: 'Assessment Calculations'
-  /model/evaluation/download:
-    get:
-      tags:
-        - Download
-      summary: Download a formatted evaluation summary file
-      operationId: model.download
-      responses:
-        '500':
-          description: Internal Server Error
-  /model/evaluation/history:
-    get:
-      tags:
-        - Download
-        - List
-      summary: List of previous evaluation summary files
-      operationId: model.history
-      responses:
-        '200':
-          description: 'Model Evaluation History'
         
 servers:
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/E222-SP21/Mushroom_ML.yaml/1.0
+        - url: 'http://localhost:8080/engr-222'
+components:
+        schemas:
+                CPU:
+                        type: object
+                        required:
+                                - model
+                        properties:
+                                model: 
+                                        type: string
+OS:
+     type: object
+     required:
+        - model
+     properties:
+        model:
+             type: string
+                                                                                   
