@@ -7,6 +7,11 @@ from joblib import load
 import numpy as np
 import json
 import pandas as pd
+from flask import jsonify, render_template, request, redirect, url_for
+from flask import send_file
+from sklearn.metrics import confusion_matrix
+
+UPLOAD_FOLDER='.'
 
 #load the model
 
@@ -23,16 +28,19 @@ for i in data.columns:
 
 y = data["class"]
 
-def my_prediction(id):
-    dummy = np.array(id)
-    dummyT = dummy.reshape(1,-1)
-    r = dummy.shape
-    t = dummyT.shape
-    r_str = json.dumps(r)
-    t_str = json.dumps(t)
-    prediction = my_model.predict(dummyT)
+def prediction(filename):
+    file_path = os.path.join(UPLOAD_FOLDER, filename)
+    data = pd.read_csv(file_path)
+
+    le = LabelEncoder()
+
+    for i in data.columns:
+                data[i] = le.fit_transform(data[i])
+    x = data.drop(["class","gill-attachment","bruises"], axis = 1)
+
+    prediction = my_model.predict(x.values)
     name = class_names[prediction]
     name = name.tolist()
     name_str = json.dumps(name)
-    str = [t_str, r_str, name_str]
-    return str
+    return name_str
+

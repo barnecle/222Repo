@@ -36,7 +36,32 @@ x_train, x_test, y_train, y_test = train_test_split(xv, yv, test_size=0.8, rando
 my_tree = DecisionTreeClassifier(max_depth = 100)
 fig = my_tree.fit(x_train,y_train)
 
-def my_prediction(an_array):
-    prediction = my_model.predict(an_array)
-    name = class_names[prediction]
-    return name
+#def my_prediction(an_array):
+   # prediction = my_model.predict(an_array)
+   # name = class_names[prediction]
+   # return name
+
+def model():
+    tree.plot_tree(fig)
+
+def confusion_matrix():
+                #how get data from most recent prediction
+    [TP, TN, FP, FN] = confusion_matrix(y_test, prediction, labels = [1,0]).ravel()
+    print("             Actual")
+    print("m         True | False")
+    print("o True [", TP, " | ", FP, "]")
+    print("d      [--------------]")
+    print("e False[", TN, "  | ",FN, "]")
+    print("l")
+
+def evaluation():
+    [TP, TN, FP, FN] = confusion_matrix(y_test, prediction, labels = [1,0]).ravel()
+    print("Accuracy")
+    print((TP+TN)/(TP+TN+FP+FN))
+    print("Precision")
+    print(TP/(TP+FP))
+    print("Recall")
+    print(TP/(TP+FN))
+    print("F1 Score")
+    print(2*TP/(2*(TP+FN+FP)))
+

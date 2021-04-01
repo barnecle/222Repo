@@ -6,6 +6,13 @@ all: start
 docker-all: docker-build docker-start
 	@echo "DONE"
 
+docker-alli: docker-build docker-inter
+	        @echo "DONE"
+
+docker-inter:
+	@echo "starting the NEW service in container interactively..."
+	docker run  -p 8080:8080 -v /home/barnecle/E222/222Repo:package -it predict_demo
+
 docker-build:
 	@echo "building the image from docker file..."
 	docker build --pull -t predict_demo .

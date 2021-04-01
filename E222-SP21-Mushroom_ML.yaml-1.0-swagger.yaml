@@ -40,14 +40,14 @@ paths:
       responses:
         '405':
           description: Invalid input
-    delete:
-      tags:
-        - Remove
-      summary: Remove a file 
-      operationId: file.remove
-      responses:
-        '405':
-          description: 'Invalid Input or Non-removable file'
+          # delete:
+          #  tags:
+          # - Remove
+          # summary: Remove a file 
+          #  operationId: file.remove
+          # responses:
+          # '405':
+          # description: 'Invalid Input or Non-removable file'
   /list:
     get:
       tags:
@@ -62,7 +62,7 @@ paths:
     get:
       tags:
         - Predict
-      operationId: file.predict
+      operationId: prediction.predict
       description: get ML prediction for file input
       responses:
         '405':
@@ -80,9 +80,9 @@ paths:
   /model:
     get:
       tags:
-        - List
+        - Image
       summary: list of links to model evaluation options
-      operationId: model.list
+      operationId: mush_model.model
       responses:
         '300':
           description: 'Choose one of the evaluation options'
@@ -91,31 +91,22 @@ paths:
       tags:
         - Text
       summary: confusion matrix of training
-      operationId: model.confusion_matrix
+      operationId: mush_model.confusion_matrix
       responses:
         '200':
           description: 'Confusion Matrix'
-  /ROC:
-    get:
-      tags:
-        - Image
-      operationId: model.ROC
-      description: get ROC curve of model
-      responses:
-        '200':
-          description: 'ROC curve'
   /assessment:
     get:
       tags:
         - Text
-      operationId: model.evaluation
+      operationId: mush_model.evaluation
       description: get Precision, Recall, F1, Accuracy
       responses:
         '200':
           description: 'Assessment Calculations'
         
 servers:
-        - url: 'http://localhost:8080/engr-222'
+        - url: 'http://localhost:8080/'
 components:
         schemas:
                 CPU:
