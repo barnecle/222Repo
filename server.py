@@ -11,7 +11,7 @@ from joblib import load
 app = connexion.App(__name__, specification_dir="./")
 
 # Read the yaml file to configure the endpoints
-app.add_api("E222-SP21-Mushroom_ML.yaml-1.0-swagger.yaml")
+app.add_api("Mushroom_ML.yaml")
 
 # create a URL route in our application for "/"
 @app.route("/")

@@ -34,19 +34,19 @@ paths:
                  format: binary
     get:
       tags:
-        - Download
+       - Download
       summary: Download a file
       operationId: file.download
       parameters:
               - name: filename
                 in: path
-                description:  file upload
+                description:  file name to download
                 required: true
                 schema:
-                  type: string
+                 type: string
       responses:
-        '405':
-          description: Invalid input
+       '405':
+         description: Invalid input
           
           # delete:
           #  tags:
@@ -59,7 +59,7 @@ paths:
   /list:
     get:
       tags:
-        - List
+       - List
       operationId: file.list_files
       description: Returns cpu information of the hosting server
       responses:
@@ -83,17 +83,17 @@ paths:
         '405':
           description: Invalid input
            
-  /predict_path:
-    get:
-      tags:
-        - Image
-      operationId: model.image
-      description: get model decision tree with highlighted path
-      responses:
-        '200':
-          description: 'No recent predictions'
+# /predict_path:
+#    get:
+#     tags:
+#        - Image
+#     operationId: model.image
+#      description: get model decision tree with highlighted path
+#     responses:
+#       '200':
+#         description: 'No recent predictions'
   /model:
-    get:
+     get:
       tags:
         - Image
       summary: list of links to model evaluation options
@@ -102,7 +102,7 @@ paths:
         '300':
           description: 'Choose one of the evaluation options'
   /confusion_matrix:
-    get:
+     get:
       tags:
         - Text
       summary: confusion matrix of training
@@ -121,7 +121,4 @@ paths:
           description: 'Assessment Calculations'
         
 servers:
-        # Added by API Auto Mocking Plugin
-        - description: SwaggerHub API Auto Mocking
-          url: https://virtserver.swaggerhub.com/E222-SP21/Mushroom_ML.yaml/1.0
         - url: 'http://localhost:8080/'

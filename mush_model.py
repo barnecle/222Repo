@@ -17,7 +17,9 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn import tree
 from sklearn.metrics import confusion_matrix
 
-file_path = "/content/mushrooms.csv"
+UPLOAD_FOLDER='.'
+filename = "mushrooms.csv"
+file_path = os.path.join(UPLOAD_FOLDER, filename)
 data = pd.read_csv(file_path)
 
 le = LabelEncoder()
@@ -36,16 +38,13 @@ x_train, x_test, y_train, y_test = train_test_split(xv, yv, test_size=0.8, rando
 my_tree = DecisionTreeClassifier(max_depth = 100)
 fig = my_tree.fit(x_train,y_train)
 
-#def my_prediction(an_array):
-   # prediction = my_model.predict(an_array)
-   # name = class_names[prediction]
-   # return name
+prediction = fig.predict(x_test)
 
 def model():
     tree.plot_tree(fig)
 
 def confusion_matrix():
-                #how get data from most recent prediction
+    
     [TP, TN, FP, FN] = confusion_matrix(y_test, prediction, labels = [1,0]).ravel()
     print("             Actual")
     print("m         True | False")

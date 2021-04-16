@@ -1,5 +1,5 @@
 import os
-from flask import jsonify, render_temple, request, redirect, url_for
+from flask import jsonify, request, redirect, url_for
 from flask import send_file
 
 UPLOAD_FOLDER='.'

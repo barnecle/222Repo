@@ -11,16 +11,16 @@ docker-alli: docker-build docker-inter
 
 docker-inter:
 	@echo "starting the NEW service in container interactively..."
-	docker run  -p 8080:8080 -v /home/barnecle/E222/222Repo:package -it predict_demo
+	docker run  -p 8080:8080 -v /home/barnecle/E222/222Repo:/package -it pkg
 
 docker-build:
 	@echo "building the image from docker file..."
-	docker build --pull -t predict_demo .
+	docker build --pull -t pkg .
 	@echo "image DONE"
 
 docker-start:
 	@echo "starting the NEW service in container..."
-	docker run  -p 8080:8080 predict_demo
+	docker run  -p 8080:8080 pkg
 
 service:
 	@echo "creating the service..."
