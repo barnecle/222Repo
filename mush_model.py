@@ -40,8 +40,37 @@ fig = my_tree.fit(x_train,y_train)
 
 prediction = fig.predict(x_test)
 
+def README():
+    print("Use endpoints /confusion_matrix, /assessment and /model to find out more about the model")
+    print("Use endpoints /predict-csv for csv files or /predict_input/{inputs} for manual input.")
+    print("The csv file should have headers and be formatted like mushrooms.csv without the class, which will be predicted.")
+    print("Both should be in the following encode:")
+    print("cap-shape: bell=b,conical=c,convex=x,flat=f, knobbed=k,sunken=s")
+    print("cap-surface: fibrous=f,grooves=g,scaly=y,smooth=s ")
+    print("cap-color: brown=n,buff=b,cinnamon=c,gray=g,green=r,pink=p,purple=u,red=e,white=w,yellow=y")
+    print("bruises: bruises=t,no=f")
+    print("odor: almond=a,anise=l,creosote=c,fishy=y,foul=f,musty=m,none=n,pungent=p,spicy=s")
+    print("gill-attachment: attached=a,descending=d,free=f,notched=n")
+    print("gill-spacing: close=c,crowded=w,distant=d")
+    print("gill-size: broad=b,narrow=n")
+    print("gill-color: black=k,brown=n,buff=b,chocolate=h,gray=g, green=r,orange=o,pink=p,purple=u,red=e,white=w,yellow=y")
+    print("stalk-shape: enlarging=e,tapering=t")
+    print("stalk-root: bulbous=b,club=c,cup=u,equal=e,rhizomorphs=z,rooted=r,missing=?")
+    print("stalk-surface-above-ring: fibrous=f,scaly=y,silky=k,smooth=s")
+    print("stalk-surface-below-ring: fibrous=f,scaly=y,silky=k,smooth=s")
+    print("stalk-color-above-ring: brown=n,buff=b,cinnamon=c,gray=g,orange=o,pink=p,red=e,white=w,yellow=y")
+    print("stalk-color-below-ring: brown=n,buff=b,cinnamon=c,gray=g,orange=o,pink=p,red=e,white=w,yellow=y")
+    print("veil-type: partial=p,universal=u")
+    print("veil-color: brown=n,orange=o,white=w,yellow=y")
+    print("ring-number: none=n,one=o,two=t")
+    print("ring-type: cobwebby=c,evanescent=e,flaring=f,large=l,none=n,pendant=p,sheathing=s,zone=z")
+    print("spore-print-color: black=k,brown=n,buff=b,chocolate=h,green=r,orange=o,purple=u,white=w,yellow=y")
+    print("population: abundant=a,clustered=c,numerous=n,scattered=s,several=v,solitary=y")
+    print("habitat: grasses=g,leaves=l,meadows=m,paths=p,urban=u,waste=w,woods=d")
+
 def model():
     tree.plot_tree(fig)
+
 
 def confusion_matrix():
     

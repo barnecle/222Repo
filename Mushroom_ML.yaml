@@ -66,11 +66,11 @@ paths:
         '200':
           description: 'CPU info, or add more text'
 
-  /predict/{filename}:
+  /predict_csv/{filename}:
     get:
       tags:
         - Predict
-      operationId: prediction.predict
+      operationId: prediction.predict_csv
       description: get ML prediction for file input
       parameters:
               - name: filename
@@ -83,15 +83,15 @@ paths:
         '405':
           description: Invalid input
            
-# /predict_path:
-#    get:
-#     tags:
-#        - Image
-#     operationId: model.image
-#      description: get model decision tree with highlighted path
-#     responses:
-#       '200':
-#         description: 'No recent predictions'
+ /READ_ME:
+    get:
+     tags:
+        - Text
+     operationId: mush_model.README
+      description: read to understand more about model
+     responses:
+       '200':
+         description: 'No recent predictions'
   /model:
      get:
       tags:
@@ -119,6 +119,26 @@ paths:
       responses:
         '200':
           description: 'Assessment Calculations'
-        
+       
+  /predict_input/{array}:
+    get:
+      tags:
+        - Predict
+      operationId: prediction.predict_input
+      description: get ML prediction for file input
+      parameters:
+              - in: path
+                name: array
+                required: true
+                schema:
+                  type: array
+                  items:
+                    type: number
+                  minItems: 22
+                style: simple
+                explode: true
+     responses:
+       '405':
+         description: Invalid input 
 servers:
         - url: 'http://localhost:8080/'

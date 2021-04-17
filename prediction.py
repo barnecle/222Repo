@@ -42,3 +42,17 @@ def predict(filename):
     name_str = json.dumps(name)
     return name_str
 
+def predict_input(array):
+    if(len(array)!=22):
+        print("Error: wrong amount of input")
+    else:
+        le = LabelEncoder()
+        for i in array:
+            array[i] = le.fit_transform(array[i])
+        prediction = my_model.predict(array)
+        if(prediction[i] == 1):
+                new_predict = "p"
+            else:
+                new_predict = "e"
+        name_str = json.dumps(new_predict)
+        return name_st
