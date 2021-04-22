@@ -14,7 +14,7 @@ UPLOAD_FOLDER='.'
 my_model = load('mush_model.pkl')
 class_names = {'p', 'e'}
 
-def predict(filename):
+def predict_csv(filename):
     file_path = os.path.join(UPLOAD_FOLDER, filename)
     data = pd.read_csv(file_path)
 
@@ -52,7 +52,7 @@ def predict_input(array):
         prediction = my_model.predict(array)
         if(prediction[i] == 1):
                 new_predict = "p"
-            else:
+        else:
                 new_predict = "e"
         name_str = json.dumps(new_predict)
         return name_st

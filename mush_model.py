@@ -9,13 +9,16 @@ Original file is located at
 
 import numpy as np
 import os
+import base64
 from sklearn import preprocessing
+from flask import json, jsonify, request, redirect, url_for
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import tree
 from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
 
 UPLOAD_FOLDER='.'
 filename = "mushrooms.csv"
@@ -40,37 +43,44 @@ fig = my_tree.fit(x_train,y_train)
 
 prediction = fig.predict(x_test)
 
+
 def README():
-    print("Use endpoints /confusion_matrix, /assessment and /model to find out more about the model")
-    print("Use endpoints /predict-csv for csv files or /predict_input/{inputs} for manual input.")
-    print("The csv file should have headers and be formatted like mushrooms.csv without the class, which will be predicted.")
-    print("Both should be in the following encode:")
-    print("cap-shape: bell=b,conical=c,convex=x,flat=f, knobbed=k,sunken=s")
-    print("cap-surface: fibrous=f,grooves=g,scaly=y,smooth=s ")
-    print("cap-color: brown=n,buff=b,cinnamon=c,gray=g,green=r,pink=p,purple=u,red=e,white=w,yellow=y")
-    print("bruises: bruises=t,no=f")
-    print("odor: almond=a,anise=l,creosote=c,fishy=y,foul=f,musty=m,none=n,pungent=p,spicy=s")
-    print("gill-attachment: attached=a,descending=d,free=f,notched=n")
-    print("gill-spacing: close=c,crowded=w,distant=d")
-    print("gill-size: broad=b,narrow=n")
-    print("gill-color: black=k,brown=n,buff=b,chocolate=h,gray=g, green=r,orange=o,pink=p,purple=u,red=e,white=w,yellow=y")
-    print("stalk-shape: enlarging=e,tapering=t")
-    print("stalk-root: bulbous=b,club=c,cup=u,equal=e,rhizomorphs=z,rooted=r,missing=?")
-    print("stalk-surface-above-ring: fibrous=f,scaly=y,silky=k,smooth=s")
-    print("stalk-surface-below-ring: fibrous=f,scaly=y,silky=k,smooth=s")
-    print("stalk-color-above-ring: brown=n,buff=b,cinnamon=c,gray=g,orange=o,pink=p,red=e,white=w,yellow=y")
-    print("stalk-color-below-ring: brown=n,buff=b,cinnamon=c,gray=g,orange=o,pink=p,red=e,white=w,yellow=y")
-    print("veil-type: partial=p,universal=u")
-    print("veil-color: brown=n,orange=o,white=w,yellow=y")
-    print("ring-number: none=n,one=o,two=t")
-    print("ring-type: cobwebby=c,evanescent=e,flaring=f,large=l,none=n,pendant=p,sheathing=s,zone=z")
-    print("spore-print-color: black=k,brown=n,buff=b,chocolate=h,green=r,orange=o,purple=u,white=w,yellow=y")
-    print("population: abundant=a,clustered=c,numerous=n,scattered=s,several=v,solitary=y")
-    print("habitat: grasses=g,leaves=l,meadows=m,paths=p,urban=u,waste=w,woods=d")
+ 
+    message_4  = ["Use endpoints /predict-csv/{filename} for csv files or /predict_input/{inputs} for manual input."]
+    message_4.append("The csv file should have headers and be formatted like mushrooms.csv without the class, which will be predicted.")
+    message_4.append("Both should be in the following encode:")
+    message_4.append("cap-shape: bell=b,conical=c,convex=x,flat=f, knobbed=k,sunken=s")
+    message_4.append("cap-surface: fibrous=f,grooves=g,scaly=y,smooth=s ")
+    message_4.append("cap-color: brown=n,buff=b,cinnamon=c,gray=g,green=r,pink=p,purple=u,red=e,white=w,yellow=y")
+    message_4.append("bruises: bruises=t,no=f")
+    message_4.append("odor: almond=a,anise=l,creosote=c,fishy=y,foul=f,musty=m,none=n,pungent=p,spicy=s")
+    message_4.append("gill-attachment: attached=a,descending=d,free=f,notched=n")
+    message_4.append("gill-spacing: close=c,crowded=w,distant=d")
+    message_4.append("gill-size: broad=b,narrow=n")
+    message_4.append("gill-color: black=k,brown=n,buff=b,chocolate=h,gray=g, green=r,orange=o,pink=p,purple=u,red=e,white=w,yellow=y")
+    message_4.append("stalk-shape: enlarging=e,tapering=t")
+    message_4.append("stalk-root: bulbous=b,club=c,cup=u,equal=e,rhizomorphs=z,rooted=r,missing=?")
+    message_4.append("stalk-surface-above-ring: fibrous=f,scaly=y,silky=k,smooth=s")
+    message_4.append("stalk-surface-below-ring: fibrous=f,scaly=y,silky=k,smooth=s")
+    message_4.append("stalk-color-above-ring: brown=n,buff=b,cinnamon=c,gray=g,orange=o,pink=p,red=e,white=w,yellow=y")
+    message_4.append("stalk-color-below-ring: brown=n,buff=b,cinnamon=c,gray=g,orange=o,pink=p,red=e,white=w,yellow=y")
+    message_4.append("veil-type: partial=p,universal=u")
+    message_4.append("veil-color: brown=n,orange=o,white=w,yellow=y")
+    message_4.append("ring-number: none=n,one=o,two=t")
+    message_4.append("ring-type: cobwebby=c,evanescent=e,flaring=f,large=l,none=n,pendant=p,sheathing=s,zone=z")
+    message_4.append("spore-print-color: black=k,brown=n,buff=b,chocolate=h,green=r,orange=o,purple=u,white=w,yellow=y")
+    message_4.append("population: abundant=a,clustered=c,numerous=n,scattered=s,several=v,solitary=y")
+    message_4.append("habitat: grasses=g,leaves=l,meadows=m,paths=p,urban=u,waste=w,woods=d")
+    return jsonify(message_4)
 
 def model():
-    tree.plot_tree(fig)
+    data = {}
+    with open('Decision_Tree', mode='rb') as file:
+            img = file.read()
 
+    data['img'] = base64.encodebytes(img).decode("utf-8")
+
+    print(json.dumps(data))
 
 def confusion_matrix():
     

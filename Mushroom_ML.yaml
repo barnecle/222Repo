@@ -83,15 +83,15 @@ paths:
         '405':
           description: Invalid input
            
- /READ_ME:
+  /READ_ME:
     get:
-     tags:
+      tags:
         - Text
-     operationId: mush_model.README
+      operationId: mush_model.README
       description: read to understand more about model
-     responses:
-       '200':
-         description: 'No recent predictions'
+      responses:
+        '200':
+          description: 'No recent predictions'
   /model:
      get:
       tags:
@@ -133,12 +133,12 @@ paths:
                 schema:
                   type: array
                   items:
-                    type: number
+                    type: string
                   minItems: 22
                 style: simple
                 explode: true
-     responses:
-       '405':
-         description: Invalid input 
+      responses:
+        '405':
+          description: Invalid input 
 servers:
         - url: 'http://localhost:8080/'
