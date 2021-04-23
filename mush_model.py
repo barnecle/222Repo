@@ -9,9 +9,8 @@ Original file is located at
 
 import numpy as np
 import os
-import base64
 from sklearn import preprocessing
-from flask import json, jsonify, request, redirect, url_for
+from flask import json, jsonify, request, redirect, url_for, make_response
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -19,6 +18,10 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn import tree
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
+import imageio
+import io as StringIO
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+
 
 UPLOAD_FOLDER='.'
 filename = "mushrooms.csv"
@@ -73,33 +76,43 @@ def README():
     message_4.append("habitat: grasses=g,leaves=l,meadows=m,paths=p,urban=u,waste=w,woods=d")
     return jsonify(message_4)
 
-def model():
-    data = {}
-    with open('Decision_Tree', mode='rb') as file:
-            img = file.read()
+def tree():
+    filename = "fig1.jpg"
+    file_path = os.path.join(UPLOAD_FOLDER, filename)
+    fig = imageio.imread(file_path)
+    axis = fig.add_subplot(1, 1, 1)
 
-    data['img'] = base64.encodebytes(img).decode("utf-8")
+    axis.imshow(fig)
+    canvas = FigureCanvas(fig)
+    output = StringIO.StringIO()
+    canvas.print_png(output)
+    response = make_response(output.getvalue())
+    response.mimetype = 'image/png'
+    return response
+    
 
-    print(json.dumps(data))
-
-def confusion_matrix():
+def confusionMatrix():
     
     [TP, TN, FP, FN] = confusion_matrix(y_test, prediction, labels = [1,0]).ravel()
-    print("             Actual")
-    print("m         True | False")
-    print("o True [", TP, " | ", FP, "]")
-    print("d      [--------------]")
-    print("e False[", TN, "  | ",FN, "]")
-    print("l")
+    matrix = ["             Actual"]
+    matrix.append("m         True | False")
+    string1 = "o True ["+str(TP) +" | "+str(FP) + "]"
+    matrix.append(string1)
+    matrix.append("d      [--------------]")
+    string2  = "e False[" + str(TN)+ "  | " + str(FN) + "]"
+    matrix.append(string2)
+    matrix.append("l")
+    return jsonify(matrix)
 
 def evaluation():
     [TP, TN, FP, FN] = confusion_matrix(y_test, prediction, labels = [1,0]).ravel()
-    print("Accuracy")
-    print((TP+TN)/(TP+TN+FP+FN))
-    print("Precision")
-    print(TP/(TP+FP))
-    print("Recall")
-    print(TP/(TP+FN))
-    print("F1 Score")
-    print(2*TP/(2*(TP+FN+FP)))
+    evalu = ["Accuracy"]
+    evalu.append((TP+TN)/(TP+TN+FP+FN))
+    evalu.append("Precision")
+    evalu.append(TP/(TP+FP))
+    evalu.append("Recall")
+    evalu.append(TP/(TP+FN))
+    evalu.append("F1 Score")
+    evalu.append(2*TP/(2*(TP+FN+FP)))
+    return jsonify(evalu)
 

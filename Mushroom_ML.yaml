@@ -92,21 +92,21 @@ paths:
       responses:
         '200':
           description: 'No recent predictions'
-  /model:
-     get:
-      tags:
-        - Image
-      summary: list of links to model evaluation options
-      operationId: mush_model.model
-      responses:
-        '300':
-          description: 'Choose one of the evaluation options'
-  /confusion_matrix:
+#  /tree:
+#     get:
+#      tags:
+#        - Image
+#      summary: list of links to model evaluation options
+#      operationId: mush_model.tree
+#      responses:
+#        '300':
+#          description: 'Choose one of the evaluation options'
+  /confusionMatrix:
      get:
       tags:
         - Text
       summary: confusion matrix of training
-      operationId: mush_model.confusion_matrix
+      operationId: mush_model.confusionMatrix
       responses:
         '200':
           description: 'Confusion Matrix'
@@ -120,25 +120,5 @@ paths:
         '200':
           description: 'Assessment Calculations'
        
-  /predict_input/{array}:
-    get:
-      tags:
-        - Predict
-      operationId: prediction.predict_input
-      description: get ML prediction for file input
-      parameters:
-              - in: path
-                name: array
-                required: true
-                schema:
-                  type: array
-                  items:
-                    type: string
-                  minItems: 22
-                style: simple
-                explode: true
-      responses:
-        '405':
-          description: Invalid input 
 servers:
         - url: 'http://localhost:8080/'
